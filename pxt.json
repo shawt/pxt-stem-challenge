@@ -1,5 +1,5 @@
 {
-    "name": "gamerbit",
+    "name": "STEM Challenge",
     "version": "0.0.8",
     "description": "Sparkfun gamer:bit blocks",
     "license": "MIT",
@@ -21,5 +21,6 @@
         "test.ts"
     ],
     "public": true,
-    "preferredEditor": "tsprj"
+    "preferredEditor": "tsprj",
+    "installedVersion": "workspace:a17e4de2-b15b-4eb0-566c-f8cbb2ebcc3b"
 }
