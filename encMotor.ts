@@ -113,7 +113,7 @@ namespace encMotor {
         _rTicks = 0;
         _lerrTicks = 0;
         _rerrTicks = 0;
-        _baseSp = 35;
+        _baseSp = sp;
         let lSpeed = _baseSp;
         let correction = 0.0;
         if (motor == motorChoice.Both) {
@@ -129,7 +129,7 @@ namespace encMotor {
 
         }
         else {
-            motorGo(50, motor, dir)
+            motorGo(_baseSp, motor, dir)
         }
 
 
