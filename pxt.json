@@ -1,6 +1,6 @@
 {
     "name": "STEM-Challenge",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "description": "Sparkfun gamer:bit blocks",
     "license": "MIT",
     "dependencies": {
