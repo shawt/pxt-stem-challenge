@@ -105,7 +105,7 @@ namespace encMotor {
      * @param rt indicates number of rotations eg:4
      */
     //% block="move %robot=variables_get(robot) %motor %dir for %rt Rotations with speed %sp"
-    //% sp.min=0 sp.max=35 sp.defl=35
+    //% sp.min=0 sp.max=100 sp.defl=35
     export function drive(robot: Robot, motor: motorChoice, dir: motorDir, rt: number, sp: number) {
         _lTurns = 0;
         _rTurns = 0;
