@@ -3,8 +3,8 @@
  */
 //%
 enum GamerBitPin {
-    //% block="P20 (D-PAD up)"
-    P20 = DAL.MICROBIT_ID_IO_P20,
+    //% block="P0 (D-PAD up)"
+    P0 = DAL.MICROBIT_ID_IO_P0,
     //% block="P1 (D-PAD left)"
     P1 = DAL.MICROBIT_ID_IO_P1,
     //% block="P2 (D-PAD right)"
