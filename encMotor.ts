@@ -5,12 +5,12 @@ let _lTicks: number = 0
 let _rTicks: number = 0
 let _lTurns: number = 0.0
 let _rTurns: number = 0.0
-let _lerrTicks: number = 0;
-let _rerrTicks: number = 0;
+let _lerrTicks: number = 0
+let _rerrTicks: number = 0
 let _lenc: DigitalPin
 let _renc: DigitalPin
 let _partialTurn: number = 0.0
-let _kp: number = 5.5;
+let _kp: number = 5.5
 
 enum motorChoice {
     //% block="left"
@@ -51,20 +51,20 @@ enum MotorPower {
 }
 
 control.onEvent(EventBusSource.MICROBIT_ID_IO_P0, EventBusValue.MICROBIT_PIN_EVT_RISE, function () {
-    _lTicks += 1;
-    _lerrTicks += 1;
+    _lTicks += 1
+    _lerrTicks += 1
     if (_lTicks % _partialTurn == 0) {
-        _lTicks = 0;
-        _lTurns += .0625;
+        _lTicks = 0
+        _lTurns += .0625
     }
 })
 
 control.onEvent(EventBusSource.MICROBIT_ID_IO_P1, EventBusValue.MICROBIT_PIN_EVT_RISE, function () {
-    _rTicks += 1;
-    _rerrTicks += 1;
+    _rTicks += 1
+    _rerrTicks += 1
     if (_rTicks % _partialTurn == 0) {
-        _rTicks = 0;
-        _rTurns += .0625;
+        _rTicks = 0
+        _rTurns += .0625
     }
 })
 
@@ -76,10 +76,10 @@ namespace encMotor {
 
     //%
     export class Robot { }
-    let _ratio: number;
-    let _lenc: DigitalPin;
-    let _renc: DigitalPin;
-    let _baseSp: number;
+    let _ratio: number
+    let _lenc: DigitalPin
+    let _renc: DigitalPin
+    let _baseSp: number
 
     /**
      * Creates a robot and automtically set it to a variable
@@ -88,15 +88,15 @@ namespace encMotor {
     //% block="create robot with %ratio to 1 gearing"
     //% blockSetVariable=robot
     export function createRobot(ratio: number): Robot {
-        _ratio = ratio;
-        _lenc = DigitalPin.P0;
-        _renc = DigitalPin.P1;
+        _ratio = ratio
+        _lenc = DigitalPin.P0
+        _renc = DigitalPin.P1
         pins.setPull(_lenc, PinPullMode.PullUp)
         pins.setEvents(_lenc, PinEventType.Edge)
         pins.setPull(_renc, PinPullMode.PullUp)
         pins.setEvents(_renc, PinEventType.Edge)
         _partialTurn = (_ratio * 4) / 16
-        return undefined;
+        return undefined
 
     }
 
@@ -107,24 +107,24 @@ namespace encMotor {
     //% block="move %robot=variables_get(robot) %motor %dir Rotations %rt Speed %sp"
     //% sp.min=0 sp.max=100 sp.defl=35
     export function drive(robot: Robot, motor: motorChoice, dir: motorDir, rt: number, sp: number) {
-        _lTurns = 0;
-        _rTurns = 0;
-        _lTicks = 0;
-        _rTicks = 0;
-        _lerrTicks = 0;
-        _rerrTicks = 0;
-        _baseSp = sp;
-        let lSpeed = _baseSp;
-        let correction = 0.0;
+        _lTurns = 0
+        _rTurns = 0
+        _lTicks = 0
+        _rTicks = 0
+        _lerrTicks = 0
+        _rerrTicks = 0
+        _baseSp = sp
+        let lSpeed = _baseSp
+        let correction = 0.0
         if (motor == motorChoice.Both) {
 
             for (let i = 0; i <= _baseSp; i += 5) {
-                _rerrTicks = 0;
-                _lerrTicks = 0;
-                correction = (_rerrTicks - _lerrTicks) / _kp;
+                _rerrTicks = 0
+                _lerrTicks = 0
+                correction = (_rerrTicks - _lerrTicks) / _kp
                 motorGo(i, 8192, dir) //start right motor
                 motorGo(i += correction, 8448, dir) //start left motor
-                basic.pause(80);
+                basic.pause(80)
             }
 
         }
@@ -134,12 +134,12 @@ namespace encMotor {
 
 
         while ((_lTurns < (rt + .05)) && (_rTurns < (rt + .05))) {
-            _rerrTicks = 0;
-            _lerrTicks = 0;
-            basic.pause(125);
+            _rerrTicks = 0
+            _lerrTicks = 0
+            basic.pause(125)
             if (motor == motorChoice.Both) {
-                correction = (_rerrTicks - _lerrTicks) / _kp;
-                lSpeed += correction;
+                correction = (_rerrTicks - _lerrTicks) / _kp
+                lSpeed += correction
                 motorGo(lSpeed, 8448, dir) //correct left motor
             }
 
@@ -153,10 +153,10 @@ namespace encMotor {
     //% block="drive %motorChoice motor(s) %motorDir for %tm secs."
     //% tm.defl=5
     export function driveWtime(motor: motorChoice, dir: motorDir, tm: number) {
-        _lTurns = 0;
-        _rTurns = 0;
-        _lTicks = 0;
-        _rTicks = 0;
+        _lTurns = 0
+        _rTurns = 0
+        _lTicks = 0
+        _rTicks = 0
         if (motor == motorChoice.Both) {
             motorGo(50, 8448, dir) //start left motor
             motorGo(50, 8192, dir) //start right motor
@@ -164,20 +164,20 @@ namespace encMotor {
         else { motorGo(50, motor, dir) }
         basic.pause(tm * 1000)
         stop()
-        _lTurns = 0;
-        _rTurns = 0;
-        _lTicks = 0;
-        _rTicks = 0;
+        _lTurns = 0
+        _rTurns = 0
+        _lTicks = 0
+        _rTicks = 0
     }
 
     //% block="drive %motorChoice motor(s) %motorDir with pwr %power"
     //% power.min=0 power.max=100 power.defl=50
     export function driveIndef(motor: motorChoice, dir: motorDir, power: number) {
         //stop();
-        _lTurns = 0;
-        _rTurns = 0;
-        _lTicks = 0;
-        _rTicks = 0;
+        _lTurns = 0
+        _rTurns = 0
+        _lTicks = 0
+        _rTicks = 0
         if (motor == motorChoice.Both) {
             motorGo(power, 8448, dir) //start left motor
             motorGo(power, 8192, dir) //start right motor
