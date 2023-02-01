@@ -15,7 +15,6 @@
         "_locales/fr/gamerbit-strings.json",
         "_locales/fr/gamerbit-jsdoc-strings.json",
         "encMotor.ts",
-        "ultrasonic.ts",
         "main.py",
         "main.ts"
     ],
